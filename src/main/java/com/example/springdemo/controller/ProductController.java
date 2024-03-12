@@ -1,10 +1,7 @@
 package com.example.springdemo.controller;
 
 import com.example.springdemo.service.ProductService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
@@ -22,5 +19,17 @@ public class ProductController {
     @GetMapping("/{id}")
     public ProductDto getById(@PathVariable(name = "id") Integer id){
         return productService.getProductById(id);
+    }
+    @PostMapping
+    public Integer createProduct(@RequestBody CreateProductInputDto inputDto){
+        return  productService.createProduct(inputDto);
+    }
+    @PutMapping
+    public void updateProduct(@RequestBody UpdateProductInputDto inputDto, @PathVariable(name = "id") Integer id){
+        productService.updateProduct(id,inputDto);
+    }
+    @DeleteMapping ("/{id}")
+    public void deleteProduct(@PathVariable(name = "id") Integer id){
+        productService.deleteProduct(id);
     }
 }

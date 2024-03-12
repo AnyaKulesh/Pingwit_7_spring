@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 @Repository
 public class ProductRepository {
     private final DataSource dataSource;
@@ -19,11 +20,11 @@ public class ProductRepository {
     }
 
     public List<Product> getAllProducts() {
-        try {
-            Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(
-                    "SELECT * FROM products");
-            ResultSet resultSet = preparedStatement.executeQuery();
+        String getRequest = """
+                SELECT * FROM products
+                """;
+        try (PreparedStatement statement = dataSource.getConnection().prepareStatement(getRequest)) {
+            ResultSet resultSet = statement.executeQuery();
             List<Product> products = new ArrayList<>();
             while (resultSet.next()) {
                 products.add(new Product(
@@ -38,11 +39,11 @@ public class ProductRepository {
             throw new RuntimeException(e);
         }
     }
+
     public Optional<Product> findProductById(Integer id) {
-        try {
-            Connection connection = dataSource.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(String.format("SELECT * FROM products WHERE id = %d", id));
-            ResultSet resultSet = preparedStatement.executeQuery();
+        String productFinder = String.format("SELECT * FROM products WHERE id = %d", id);
+        try (PreparedStatement statement = dataSource.getConnection().prepareStatement(productFinder)) {
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 return Optional.of(new Product(
                         resultSet.getInt(1),
@@ -56,4 +57,61 @@ public class ProductRepository {
         }
     }
 
+    public Integer createProduct(Product product) {
+        String createRequest = """
+                INSERT INTO products(id,name,description,price) VALUES(?,?,?,?)
+                """;
+        try (PreparedStatement statement = dataSource.getConnection().prepareStatement(createRequest)){
+            int id = getNextProductId(statement.getConnection());
+            statement.setInt(1, id);
+            statement.setString(2, product.name());
+            statement.setString(3, product.description());
+            statement.setBigDecimal(4, product.price());
+            statement.executeUpdate();
+
+            return id;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateProduct(Product productToUpdate) {
+        String updateRequest = """
+                UPDATE products
+                SET name = ?, description = ?, price = ?
+                WHERE id = ?;
+                """;
+        try (PreparedStatement statement = dataSource.getConnection().prepareStatement(updateRequest)) {
+            statement.setString(1, productToUpdate.name());
+            statement.setString(2, productToUpdate.description());
+            statement.setBigDecimal(3, productToUpdate.price());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private Integer getNextProductId(Connection connection) {
+        String nextIdRequest = """
+                SELECT max(id) from products
+                """;
+        try (PreparedStatement statement = connection.prepareStatement(nextIdRequest)) {
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt(1) + 1;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return 0;
+    }
+
+    public void deleteProductById(Integer id) {
+        String deleteRequest = String.format("DELETE FROM products WHERE id = %d", id);
+        try (PreparedStatement statement = dataSource.getConnection().prepareStatement(deleteRequest)) {
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

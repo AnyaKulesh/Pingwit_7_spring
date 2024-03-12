@@ -1,10 +1,7 @@
 package com.example.springdemo.controller;
 
 import com.example.springdemo.service.UserService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -25,5 +22,15 @@ public class UserController {
     @GetMapping("/{id}")
     public UserDto findById(@PathVariable(name = "id") Integer id) {
         return userService.findUserById(id);
+    }
+
+    @PostMapping
+    public Integer createUser(@RequestBody CreateUserInputDto input) {
+        return userService.createUser(input);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable(name = "id") Integer id){
+        userService.deleteUser(id);
     }
 }
