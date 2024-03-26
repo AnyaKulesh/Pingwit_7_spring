@@ -1,8 +1,8 @@
-package com.example.springdemo.converter;
+package com.example.springdemo.converter.user;
 
-import com.example.springdemo.controller.CreateUserInputDto;
-import com.example.springdemo.controller.UserDto;
-import com.example.springdemo.repository.User;
+import com.example.springdemo.controller.user.CreateUserInputDto;
+import com.example.springdemo.controller.user.UserDto;
+import com.example.springdemo.repository.user.User;
 import org.springframework.stereotype.Component;
 
 @Component

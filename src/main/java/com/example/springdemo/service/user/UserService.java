@@ -1,11 +1,11 @@
-package com.example.springdemo.service;
+package com.example.springdemo.service.user;
 
-import com.example.springdemo.controller.CreateUserInputDto;
-import com.example.springdemo.controller.UserDto;
-import com.example.springdemo.converter.UserConverter;
-import com.example.springdemo.repository.User;
-import com.example.springdemo.repository.UserRepository;
-import com.example.springdemo.validator.UserValidator;
+import com.example.springdemo.controller.user.CreateUserInputDto;
+import com.example.springdemo.controller.user.UserDto;
+import com.example.springdemo.converter.user.UserConverter;
+import com.example.springdemo.repository.user.User;
+import com.example.springdemo.repository.user.UserRepository;
+import com.example.springdemo.validator.user.UserValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

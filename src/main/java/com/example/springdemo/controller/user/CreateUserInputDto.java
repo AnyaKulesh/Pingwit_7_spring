@@ -1,4 +1,4 @@
-package com.example.springdemo.controller;
+package com.example.springdemo.controller.user;
 
 public class CreateUserInputDto {
     private String name;

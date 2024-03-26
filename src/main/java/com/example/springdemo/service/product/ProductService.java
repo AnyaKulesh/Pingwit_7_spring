@@ -1,13 +1,13 @@
-package com.example.springdemo.service;
+package com.example.springdemo.service.product;
 
-import com.example.springdemo.controller.CreateProductInputDto;
-import com.example.springdemo.controller.ProductDto;
-import com.example.springdemo.controller.UpdateProductInputDto;
-import com.example.springdemo.converter.ProductConverter;
+import com.example.springdemo.controller.product.CreateProductInputDto;
+import com.example.springdemo.controller.product.ProductDto;
+import com.example.springdemo.controller.product.UpdateProductInputDto;
+import com.example.springdemo.converter.product.ProductConverter;
 import com.example.springdemo.exception.PingwitException;
-import com.example.springdemo.repository.Product;
-import com.example.springdemo.repository.ProductRepository;
-import com.example.springdemo.validator.ProductValidator;
+import com.example.springdemo.repository.product.Product;
+import com.example.springdemo.repository.product.ProductRepository;
+import com.example.springdemo.validator.product.ProductValidator;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

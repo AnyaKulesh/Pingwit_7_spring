@@ -1,6 +1,6 @@
-package com.example.springdemo.validator;
+package com.example.springdemo.validator.product;
 
-import com.example.springdemo.controller.CreateProductInputDto;
+import com.example.springdemo.controller.product.CreateProductInputDto;
 import com.example.springdemo.exception.PingwitValidationException;
 import io.micrometer.common.util.StringUtils;
 import org.springframework.stereotype.Component;
@@ -17,26 +17,33 @@ import java.util.regex.Pattern;
  */
 @Component
 public class ProductValidator {
+
+    public static final String BLANK_NAME_ERROR = "Name is blank";
+    public static final String BLANK_SURNAME_ERROR = "Description is blank";
+    public static final String ONLY_LETTERS_NAME_ERROR = "Name should have only letters";
+    public static final String ONLY_LETTERS_DESCRIPTION_ERROR = "Description should have only letters";
+    public static final String POSITIVE_PRICE_ERROR = "Price should be more than zero";
+
     private static final Pattern ONLY_LETTERS_PATTERN = Pattern.compile("^[a-zA-Z]*$");
 
     public void validateOnCreate(CreateProductInputDto inputDto){
         List<String> errors = new ArrayList<>();
-        if (StringUtils.isBlank(inputDto.getName())) {
-            errors.add("Name is blank");
+        if (StringUtils.isBlank(inputDto.getName().trim())) {
+            errors.add(BLANK_NAME_ERROR);
         }
         if(!ONLY_LETTERS_PATTERN.matcher(inputDto.getName()).matches()){
-            errors.add("Name should have only letters");
+            errors.add(ONLY_LETTERS_NAME_ERROR);
         }
         if(inputDto.getDescription()!= null){
-        if (StringUtils.isBlank(inputDto.getDescription())) {
-            errors.add("Description is blank");
+        if (StringUtils.isBlank(inputDto.getDescription().trim())) {
+            errors.add(BLANK_SURNAME_ERROR);
         }
         if(!ONLY_LETTERS_PATTERN.matcher(inputDto.getDescription()).matches()){
-            errors.add("Description should have only letters");
+            errors.add(ONLY_LETTERS_DESCRIPTION_ERROR);
         }
         }
         if (inputDto.getPrice().compareTo(BigDecimal.ZERO) <= 0) {
-            errors.add("Price should be more than zero");
+            errors.add(POSITIVE_PRICE_ERROR);
         }
 
         if (!errors.isEmpty()) {

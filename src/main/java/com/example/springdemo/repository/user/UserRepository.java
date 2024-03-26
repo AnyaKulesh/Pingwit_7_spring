@@ -1,5 +1,6 @@
-package com.example.springdemo.repository;
+package com.example.springdemo.repository.user;
 
+import com.example.springdemo.repository.user.User;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;

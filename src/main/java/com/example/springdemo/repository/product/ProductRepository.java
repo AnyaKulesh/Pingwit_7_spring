@@ -1,5 +1,6 @@
-package com.example.springdemo.repository;
+package com.example.springdemo.repository.product;
 
+import com.example.springdemo.repository.product.Product;
 import org.springframework.stereotype.Repository;
 
 import javax.sql.DataSource;

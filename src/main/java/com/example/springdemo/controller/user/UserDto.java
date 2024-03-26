@@ -1,4 +1,4 @@
-package com.example.springdemo.controller;
+package com.example.springdemo.controller.user;
 
 import java.util.Objects;
 

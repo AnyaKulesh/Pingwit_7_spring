@@ -1,8 +1,8 @@
-package com.example.springdemo.converter;
+package com.example.springdemo.converter.product;
 
-import com.example.springdemo.controller.CreateProductInputDto;
-import com.example.springdemo.controller.ProductDto;
-import com.example.springdemo.repository.Product;
+import com.example.springdemo.controller.product.CreateProductInputDto;
+import com.example.springdemo.controller.product.ProductDto;
+import com.example.springdemo.repository.product.Product;
 import org.springframework.stereotype.Component;
 
 @Component

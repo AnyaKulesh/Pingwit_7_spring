@@ -1,4 +1,4 @@
-package com.example.springdemo.controller;
+package com.example.springdemo.controller.product;
 
 import java.math.BigDecimal;
 import java.util.Objects;
